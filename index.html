@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Media</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body onload='onScreen()'>
+    <style>
+    /*imported some googel font(like them more:))*/
+
+    @import url('https://fonts.googleapis.com/css?family=Lato|Slabo+27px');
+    body {
+        background-color: grey;
+    }
+
+    ul,
+    li {
+        font-family: 'Slabo 27px', serif;
+        list-style-type: none;
+        font-size: 15pt;
+    }
+
+    h1 {
+        font-family: 'Lato', sans-serif;
+    }
+
+    .row {
+        margin: 3%;
+    }
+
+    .img-responsive {
+        width: 100%;
+        height: 350px;
+    }
+    /*styling classes to distinguesh them*/
+
+    .cdStyle {
+        border-style: solid;
+        border-color: red;
+        background-color: lightgrey;
+    }
+
+    .dvdStyle {
+        border-style: solid;
+        border-color: green;
+        background-color: lightgrey;
+    }
+
+    .bookStyle {
+        border-style: solid;
+        border-color: blue;
+        background-color: lightgrey;
+    }
+
+    .comicStyle {
+        border-style: solid;
+        border-color: yellow;
+        background-color: lightgrey;
+    }
+    </style>
+    <script src='mymedia.js'></script>
+    <!-- creating bootstrap grid and form for input-->
+    <div class='container-fluid' id='mediaList'>
+        <div class='row'>
+            <form>
+                <div class="dropdown ">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chose a media type
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" id='dropdown'>
+                        <li><a href='#'>Cd</a></li>
+                        <li><a href='#'>Dvd</a></li>
+                        <li><a href='#'>Book</a></li>
+                        <li><a href='#'>Comic</a></li>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label for="titel">Titel:</label>
+                    <input type="text" class="form-control" id="titel">
+                </div>
+                <div class="form-group">
+                    <label for="author">Author:</label>
+                    <input type="text" class="form-control" id="author">
+                </div>
+                <div class="form-group">
+                    <label for="genre">Genre:</label>
+                    <input type="text" class="form-control" id="gener">
+                </div>
+                <div class="form-group">
+                    <label for="publisher">Publisher:</label>
+                    <input type="text" class="form-control" id="publisher">
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating (1-5):</label>
+                    <input type="number" class="form-control" id="rating">
+                </div>
+                <div class="form-group">
+                    <label for="minutes">Minutes:</label>
+                    <input type="number" class="form-control" id="minutes">
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight:</label>
+                    <input type="number" class="form-control" id="weight">
+                </div>
+                <div class="form-group">
+                    <label for="image">Image source:</label>
+                    <input type="text" class="form-control" id="image">
+                </div>
+                <button type="submit" class="btn btn-default" onclick="addNewMedia()">Add</button>
+            </form>
+        </div>
+    </div>
+    <script>
+    //adding data and displaying array on screen
+    function onScreen() {
+        mediaArray = new Array();
+        firstCd = new Cd('Dylan', 'Bob Dylan', 'rock', 'Asylum Records', 4, 34, 'https://upload.wikimedia.org/wikipedia/en/b/b4/Bob_Dylan_-_Dylan_%281973_album%29.jpg')
+        secoundCd = new Cd('Diamond Life', 'Sade', 'smooth soul', 'Epic', 5, 45, 'http://assets5.smoothradio.com/2014/31/sade-diamond-life-1407486222-view-0.jpg');
+        firstDvd = new Dvd('City lights', 'Charlie Chaplin', 'romantic comedy', 'United Artists', 4, 87, 'https://secure.franklintheatre.com/images/user/ft_11874/citylights_image.jpg');
+        secoundDvd = new Dvd('Lawrence of Arabia', 'T.E.Lawrence', 'historical drama', 'Columbia Pictures', 2, 222, 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Lawrence_of_arabia_ver3_xxlg.jpg');
+        firstBook = new Book('Woodwalkers', 'Katja Brandis', 'belletristik', 'Bild', 5, 1, 'https://images-na.ssl-images-amazon.com/images/I/51szaJXvM5L.jpg');
+        secoundBook = new Book('Foundation', 'Isaac Asimov', 'fantasy science fiction', 'Heyne', 3, 2, 'https://images.gr-assets.com/books/1417900846l/29579.jpg');
+        firstComic = new Comic('The Sandman', 'Neil Gaiman', 'fantasy', 'Mangas', 4, 'http://www.vertigocomics.com/sites/default/files/styles/covers192x291/public/gn-covers/2013/03/Sandman_Omni-1-FPO_CV_fr80fzzd79_.jpg?itok=dpC6lKvE');
+        secoundComic = new Comic('Modesty Blaise', 'Peter O\'Donnell', 'mystery', 'Titan Books', 5, 'http://girlswithguns.org/wp-content/uploads/2016/05/modesty1.jpg');
+
+        mediaArray.push(firstCd);
+        mediaArray.push(secoundCd);
+        mediaArray.push(firstDvd);
+        mediaArray.push(secoundDvd);
+        mediaArray.push(firstBook);
+        mediaArray.push(secoundBook);
+        mediaArray.push(firstComic);
+        mediaArray.push(secoundComic);
+        display = new Display(mediaArray);
+        display.showArray();
+        display.renderAll();
+
+    }
+    //adding new media with the data from inputs
+
+    function addNewMedia() {
+        dropDown = $('.dropdown-menu li a.selectedLi').text();
+        titel = document.getElementById('titel').value;
+        author = document.getElementById('author').value;
+        gener = document.getElementById('gener').value;
+        publisher = document.getElementById('publisher').value;
+        rating = document.getElementById('rating').value;
+        minutes = document.getElementById('minutes').value;
+        weight = document.getElementById('weight').value;
+        image = document.getElementById('image').value;
+        newMedia = new Array;
+
+
+
+        /*the logic how it should add(working fine, uncomment it and u will
+        see it is working), but somehow it does not take
+        the text from selected dropdown(althou I used the same jquerry selector as in the 
+        previous codereview and it worked perfect) */
+
+        /*newMedia = new Comic(titel,author,gener,publisher,rating,image);
+        mediaArray.push(newMedia);
+        display.showArray();
+        display.renderAll();*/
+
+        switch (dropDown) {
+            case Comic:
+                newMedia = new Comic(titel, author, gener, publisher, rating, image);
+                mediaArray.push(newMedia);
+                break;
+            case Book:
+                newMedia = new Book(titel, author, gener, publisher, rating, weight, image);
+                mediaArray.push(newMedia);
+                break;
+            case Cd:
+                newMedia = new Cd(titel, author, gener, publisher, rating, minutes, image);
+                mediaArray.push(newMedia);
+                break;
+            case Dvd:
+                newMedia = new Dvd(titel, author, gener, publisher, rating, minutes, image);
+                mediaArray.push(newMedia);
+                break;
+            default:
+                console.log('u have to choose from dropdown')
+        }
+
+        display.showArray();
+        display.renderAll();
+
+    }
+    /*I beleave my switch would work if the jquerry selector would save the text from dropdown...*/
+    </script>
+</body>
+
+</html>
